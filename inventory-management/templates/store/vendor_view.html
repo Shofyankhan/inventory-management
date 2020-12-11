@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block title %}View Vendor{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li><a href="/store/arm-list">List Armada</a></li>
+                            <li class="active">View Vendor</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Data Vendor </h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td><th scope="row">Vendor ID</th></td>
+                            <td>{{ vendors.vendor_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><th scope="row">Nama Vendor</th></td>
+                            <td>{{ vendors.nama_vendor }}</td>
+                        </tr>
+                        <tr>
+                            <td><th scope="row">Alamat Vendor</th></td>
+                            <td>{{ vendors.alamat_vendor }}</td>
+                        </tr>
+                        <tr>
+                            <td><th scope="row">PIC Vendor</th></td>
+                            <td>{{ vendors.pic_vendor }}</td>
+                        </tr>
+                        <tr>
+                            <td><th scope="row">No Telp Kantor</th></td>
+                            <td>{{ vendors.notelp_kantor }}</td>
+                        </tr>
+                        <tr>
+                            <td><th scope="row">No Telp PIC</th></td>
+                            <td>{{ vendors.notelp_pic }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

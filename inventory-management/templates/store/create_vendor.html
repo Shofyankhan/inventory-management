@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Tambah Vendor{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">Tambah Vendor</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Tambah Vendor</strong>
+            </div>
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+
+                        <form action="#" method="post" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="vendors_id" class="col-sm-2 col-form-label">Vendor ID<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ form.vendor_id }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nama_vendor" class="col-sm-2 col-form-label">Nama Vendor<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ form.nama_vendor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="alamat_vendor" class="col-sm-2 col-form-label">Alamat Vendor</label>
+                                <div class="col-sm-10">
+                                    {{ form.alamat_vendor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pic_vendor" class="col-sm-2 col-form-label">PIC Vendor</label>
+                                <div class="col-sm-10">
+                                    {{ form.pic_vendor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="notelp_kantor" class="col-sm-2 col-form-label">No Telp Kantor</label>
+                                <div class="col-sm-10">
+                                    {{ form.notelp_kantor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="notelp_pic" class="col-sm-2 col-form-label">No Telp PIC</label>
+                                <div class="col-sm-10">
+                                    {{ form.notelp_pic }}
+                                </div>
+                            </div>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                    <span id="payment-button-amount">Create Vendor</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.col-->
+</div>
+{% endblock content %}

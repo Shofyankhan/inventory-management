@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Edit Armada{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">Edit</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Edit Data Jenis Armada</strong>
+            </div>
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+
+                        <form action="#" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="vendor_id" class="col-sm-2 col-form-label">Vendor ID<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.vendor_id }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nama_vendor" class="col-sm-2 col-form-label">Nama Vendor<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.nama_vendor  }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="alamat_vendor" class="col-sm-2 col-form-label">Alamat Vendor</label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.alamat_vendor  }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pic_vendor" class="col-sm-2 col-form-label">PIC Vendor</label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.pic_vendor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="notelp_kantor" class="col-sm-2 col-form-label">No Telp Kantor</label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.notelp_kantor }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="notelp_pic" class="col-sm-2 col-form-label">No Telp PIC</label>
+                                <div class="col-sm-10">
+                                    {{ vendorform.notelp_pic }}
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                    <span id="payment-button-amount">Edit Vendor</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.col-->
+</div>
+{% endblock content %}

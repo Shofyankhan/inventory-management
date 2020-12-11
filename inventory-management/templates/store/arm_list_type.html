@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Vendor List{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">Vendor List</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Jenis Armada List </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-stats table-striped" >
+                    <table id="arm_type_table" class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID Jenis</th>
+                                <th>Jenis</th>
+                                <th>Jumlah Seat</th>
+                                <th>Merek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if armtype %}
+                                {% for armtype in armtype %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ armtype.IDJenis }}</td>
+                                    <td>{{ armtype.jenis }}</td>
+                                    <td>{{ armtype.jumlah_seat|default_if_none:"-" }}</td>
+                                    <td>{{ armtype.merek|default_if_none:"-" }}</td>
+                                    <td>
+                                        <a class="btn btn-info" href="{% url 'edit-vechile-type' armtype.IDJenis %}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        <a class="btn btn-danger" href="{% url 'delete-vechile-type' armtype.IDJenis %}" onclick="return confirm('PERINGATAN !!, Jika anda mendelete data ini akan melibatkan data Armada yang berhubungan.. Anda yakin akan mendelete data ini ?');">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>   
+                                {% endfor %}
+                            {% else %}
+                                <tr><td>No Data</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

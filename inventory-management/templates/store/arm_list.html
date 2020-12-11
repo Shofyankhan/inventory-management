@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Armada List{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">List Armada</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Armada List </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-stats table-striped" >
+                    <table id="vechile_table" class="table table-sm">
+                        <a class="btn btn-secondary" href="">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                            Export To Excel
+                        </a>
+                        <br>
+                        <br>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Gambar</th>
+                                <th>Alias</th>
+                                <th>No Polisi</th>
+                                <th>Jenis</th>
+                                <th>Tanggal STNK</th>
+                                <th>Tanggal Pembelian</th>
+                                <th>Harga Beli</th>
+                                <th>Scan Faktur Pembelian</th>
+                                <th>Vendor Id</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if arm %}
+                                {% for arm in arm %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        {% if arm.photo %}
+                                            <a href="/media/{{ arm.photo }}" target="_blank">
+                                                <img src="{{ arm.photo.url }}">
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ arm.alias }}</td>
+                                    <td>{{ arm.no_polisi }}</td>
+                                    <td>{{ arm.IDJenis|default_if_none:"-"  }}</td>
+                                    <td {% if arm.expires_today %} class="blinkme" {% endif %}>
+                                            {{ arm.tanggal_stnk|default_if_none:"-"  }}
+                                    </td>
+                                    <td>{{ arm.tanggal_pembelian|default_if_none:"-" }}</td>
+                                    <td>{{ arm.harga_beli|default_if_none:"-" }}</td>
+                                    <td>
+                                        {% if arm.scan_faktur_beli %}
+                                            <a href="/media/{{ arm.scan_faktur_beli }}" target="_blank">
+                                                <img src="{{ arm.scan_faktur_beli.url}}">
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if arm.vendor_id %}
+                                            <a href="{% url 'vendor-view' arm.vendor_id %}">{{ arm.vendor_id }}</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info" href="{% url 'edit-vechile' arm.no_polisi %}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{% url 'delete-vechile' arm.no_polisi %}" onclick="return confirm('Anda yakin akan mendelete data ini ?');">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            {% else %}
+                                <tr><td>No Armada Data</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+                <!-- Button trigger modal --> 
+                                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLongTitle">Vendor</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                     </button>
+                            </div>
+                            <div class="modal-body">
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+    
+</div>
+{% endblock content %}
+

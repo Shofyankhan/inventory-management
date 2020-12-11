@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Tambah Jenis Armada{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">Tambah Jenis Armada</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Tambah Jenis Armada</strong>
+            </div>
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+                        <form action="#" method="post" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id_jenis" class="col-sm-2 col-form-label">ID Jenis<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ form.IDJenis }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="jenis" class="col-sm-2 col-form-label">Jenis<a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ form.jenis }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="jumlah_seat" class="col-sm-2 col-form-label">Jumlah Seat</label>
+                                <div class="col-sm-10">
+                                    {{ form.jumlah_seat }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="merek" class="col-sm-2 col-form-label">Merek</label>
+                                <div class="col-sm-10">
+                                    {{ form.merek }}
+                                </div>
+                            </div>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                    <span id="payment-button-amount">Create Armada Type</span>
+                                </button>
+                            </div>
+                        </form>
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                         {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.col-->
+</div>
+{% endblock content %}

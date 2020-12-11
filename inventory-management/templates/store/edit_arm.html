@@ -1,0 +1,108 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Create Armada{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li class="active">Create</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Create Armada</strong>
+            </div>
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+
+                        <form action="#" method="post" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-2 col-form-label">No Polisi</label>
+                                <div class="col-sm-10">
+                                    {{ form.no_polisi }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="alias" class="col-sm-2 col-form-label">Alias</label>
+                                <div class="col-sm-10">
+                                    {{ form.alias }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="IDJenis" class="col-sm-2 col-form-label">ID Jenis</label>
+                                <div class="col-sm-10">
+                                    {{ form.IDJenis }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tanggal_stnk" class="col-sm-2 col-form-label">Tanggal STNK</label>
+                                <div class="col-sm-10">
+                                    {{ form.tanggal_stnk }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="status_stnk" class="col-sm-2 col-form-label">Status STNK</label>
+                                <div class="col-sm-10">
+                                    {{ form.status_stnk }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="harga_beli" class="col-sm-2 col-form-label">Harga Beli</label>
+                                <div class="col-sm-10">
+                                    {{ form.harga_beli }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="scan_faktur_beli" class="col-sm-2 col-form-label">Scan Faktur Beli</label>
+                                <div class="col-sm-10">
+                                    {{ form.scan_faktur_beli }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="vendor_id" class="col-sm-2 col-form-label">Vendor Id</label>
+                                <div class="col-sm-10">
+                                    {{ form.vendor_id }}
+                                </div>
+                            </div>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                    <span id="payment-button-amount">Create Armada</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.col-->
+</div>
+{% endblock content %}
