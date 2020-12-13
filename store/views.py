@@ -220,6 +220,8 @@ def create_vechile_type(request):
         if forms.is_valid():
             forms.save()
             return redirect('arm-type-list')
+        else:
+            print(forms.errors)
     context = {
         'form': forms
     }
