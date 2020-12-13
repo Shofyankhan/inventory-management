@@ -26,6 +26,7 @@ class VechileType(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         self.jenis = self.jenis.upper()
+        super(VechileType, self).save(force_insert, force_update)
 
     def __str__(self):
         return self.jenis
