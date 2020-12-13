@@ -43,29 +43,12 @@
                         <form action="#" method="post" novalidate="novalidate">
                             {% csrf_token %}
                             <div class="form-group row">
-                                <label for="id_jenis" class="col-sm-2 col-form-label">ID Jenis<a style='color:red'>*</a></label>
-                                <div class="col-sm-10">
-                                    {{ form.IDJenis }}
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="jenis" class="col-sm-2 col-form-label">Jenis<a style='color:red'>*</a></label>
                                 <div class="col-sm-10">
                                     {{ form.jenis }}
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="jumlah_seat" class="col-sm-2 col-form-label">Jumlah Seat</label>
-                                <div class="col-sm-10">
-                                    {{ form.jumlah_seat }}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="merek" class="col-sm-2 col-form-label">Merek</label>
-                                <div class="col-sm-10">
-                                    {{ form.merek }}
-                                </div>
-                            </div>
+
                             <div>
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                     <span id="payment-button-amount">Create Armada Type</span>

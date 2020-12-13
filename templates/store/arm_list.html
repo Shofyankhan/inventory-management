@@ -41,13 +41,7 @@
             </div>
             <div class="card-body">
                 <div class="table-stats table-striped" >
-                    <table id="vechile_table" class="table table-sm">
-                        <a class="btn btn-secondary" href="">
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                            Export To Excel
-                        </a>
-                        <br>
-                        <br>
+                    <table id="vechile_table" class="display compact"">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -55,6 +49,8 @@
                                 <th>Alias</th>
                                 <th>No Polisi</th>
                                 <th>Jenis</th>
+                                <th>Merek</th>
+                                <th>Jumlah Seat</th>
                                 <th>Tanggal STNK</th>
                                 <th>Tanggal Pembelian</th>
                                 <th>Harga Beli</th>
@@ -74,21 +70,30 @@
                                             <a href="/media/{{ arm.photo }}" target="_blank">
                                                 <img src="{{ arm.photo.url }}">
                                             </a>
+                                        {% else %}
+                                            -
                                         {% endif %}
                                     </td>
                                     <td>{{ arm.alias }}</td>
                                     <td>{{ arm.no_polisi }}</td>
-                                    <td>{{ arm.IDJenis|default_if_none:"-"  }}</td>
+                                    <td>{{ arm.jenis|default_if_none:"-"  }}</td>
+                                    <td>{{ arm.merek|default_if_none:"-" }}</td>
                                     <td {% if arm.expires_today %} class="blinkme" {% endif %}>
-                                            {{ arm.tanggal_stnk|default_if_none:"-"  }}
+                                        {{ arm.tanggal_stnk|default_if_none:"-"  }}
                                     </td>
+                                    <td>{{ arm.jumlah_seat|default_if_none:"-" }}</td>
                                     <td>{{ arm.tanggal_pembelian|default_if_none:"-" }}</td>
-                                    <td>{{ arm.harga_beli|default_if_none:"-" }}</td>
+                                    <td>{% load humanize %}
+                                        {{ arm.harga_beli|default_if_none:"-"|intcomma }}
+
+                                    </td>
                                     <td>
                                         {% if arm.scan_faktur_beli %}
                                             <a href="/media/{{ arm.scan_faktur_beli }}" target="_blank">
-                                                <img src="{{ arm.scan_faktur_beli.url}}">
+                                                Lihat Faktur
                                             </a>
+                                        {% else %}
+                                            -
                                         {% endif %}
                                     </td>
                                     <td>

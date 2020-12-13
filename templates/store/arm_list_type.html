@@ -42,10 +42,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>ID Jenis</th>
                                 <th>Jenis</th>
-                                <th>Jumlah Seat</th>
-                                <th>Merek</th>
+                                <th>-</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,16 +51,13 @@
                                 {% for armtype in armtype %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ armtype.IDJenis }}</td>
                                     <td>{{ armtype.jenis }}</td>
-                                    <td>{{ armtype.jumlah_seat|default_if_none:"-" }}</td>
-                                    <td>{{ armtype.merek|default_if_none:"-" }}</td>
                                     <td>
-                                        <a class="btn btn-info" href="{% url 'edit-vechile-type' armtype.IDJenis %}">
+                                        <a class="btn btn-info" href="{% url 'edit-vechile-type' armtype.jenis %}">
                                             <i class="fa fa-edit"></i>
                                         </a>
 
-                                        <a class="btn btn-danger" href="{% url 'delete-vechile-type' armtype.IDJenis %}" onclick="return confirm('PERINGATAN !!, Jika anda mendelete data ini akan melibatkan data Armada yang berhubungan.. Anda yakin akan mendelete data ini ?');">
+                                        <a class="btn btn-danger" href="{% url 'delete-vechile-type' armtype.jenis %}" onclick="return confirm('PERINGATAN !!, Jika anda mendelete data ini akan melibatkan data Armada yang berhubungan.. Anda yakin akan mendelete data ini ?');">
                                             <i class="fa fa-trash-o"></i>
                                         </a>
                                     </td>

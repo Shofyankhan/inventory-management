@@ -44,30 +44,11 @@
                         <form action="#" method="post" novalidate="novalidate" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group row">
-                                <label for="IDJenis" class="col-sm-2 col-form-label">ID Jenis</label>
-                                <div class="col-sm-10">
-                                    {{ vechiletypeform.IDJenis }}
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
                                 <div class="col-sm-10">
                                     {{ vechiletypeform.jenis }}
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="jumlah_seat" class="col-sm-2 col-form-label">Jumlah Seat</label>
-                                <div class="col-sm-10">
-                                    {{ vechiletypeform.jumlah_seat }}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="merek" class="col-sm-2 col-form-label">Merek</label>
-                                <div class="col-sm-10">
-                                    {{ vechiletypeform.merek }}
-                                </div>
-                            </div>
-                            
                             <div>
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                     <span id="payment-button-amount">Edit Jenis Armada</span>

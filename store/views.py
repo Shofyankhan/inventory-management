@@ -40,36 +40,6 @@ from .forms import (
 )
 
 
-def export_users_xls(request):
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="users.xls"'
-
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Armada')
-
-    # Sheet header, first row
-    row_num = 0
-
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-
-    columns = ['No Polisi', 'Alias', 'Photo', 'IDJenis', 'Tanggal Stnk', 'Status Stnk', 'Tanggal Pembelian', 'Harga Beli', 'Scan Faktur Beli', 'Vendor Id' ]
-
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
-
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-
-    rows = Vechile.objects.all().values_list('no_polisi', 'alias', 'photo', 'IDJenis', 'tanggal_stnk', 'status_stnk', 'tanggal_pembelian', 'harga_beli', 'scan_faktur_beli', 'vendor_id')
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], font_style)
-
-    wb.save(response)
-    return response
-
 
 def VendorView(request, ven_id):
     vendors = Vendor.objects.get(vendor_id=ven_id)
@@ -125,6 +95,8 @@ def create_buyer(request):
                 user = User.objects.create_user(username=username, password=password, email=email, is_buyer=True)
                 Buyer.objects.create(user=user, name=name, address=address)
                 return redirect('buyer-list')
+        else:
+            print(forms.errors)
     context = {
         'form': forms
     }
@@ -162,17 +134,18 @@ def edit_vechile(request, no_pol):
         vechileform = VechileForm(request. POST,request.FILES, instance=armada)
         if vechileform.is_valid():
             vechileform.save()
-        return redirect('arm-list')
-
+            return redirect('arm-list')
+        else:
+            print(vechileform.errors)
     context = {
         'vechileform': vechileform
     }
-    return render(request, 'store/arm_list_edit.html', context)
+    return render(request, 'store/edit_arm.html', context)
 
 
 #update vechile armada
 def edit_vechile_type(request, pk):
-    armadatype = VechileType.objects.get(IDJenis=pk)
+    armadatype = VechileType.objects.get(jenis=pk)
     vechiletypeform = VechileTypeForm(instance=armadatype)
     if request.method == 'POST':
         vechiletypeform = VechileTypeForm(request. POST,request.FILES, instance=armadatype)
@@ -187,7 +160,7 @@ def edit_vechile_type(request, pk):
 
 # vechile armada
 def delete_vechile_type(request, pk):
-    armadatype = VechileType.objects.get(IDJenis=pk)
+    armadatype = VechileType.objects.get(jenis=pk)
     armadatype.delete()
     return redirect('arm-type-list')
     #return render(request, 'store/arm_list.html')\
@@ -288,6 +261,8 @@ def create_season(request):
         if forms.is_valid():
             forms.save()
             return redirect('season-list')
+        else:
+            print(forms.errors)
     context = {
         'form': forms
     }

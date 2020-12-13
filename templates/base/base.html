@@ -30,8 +30,8 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" /> -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-
-    <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />
+	
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.5/b-html5-1.6.5/datatables.min.css"/>
 
     <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css"> -->
@@ -131,15 +131,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+     
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.5/b-html5-1.6.5/datatables.min.js"></script>
     
     <!--Script for Autocomple in Add vendor id-->
     
     <!-- autocomplete select box -->
     <script>
         $(document).ready(function() {
-            $('#IDJenis').select2();
+            $('#jenis').select2();
+            $('#merek').select2();
             $('#vendor_id').select2();
         });
     </script>
@@ -147,14 +148,16 @@
     <!-- datatables -->
     <script>
         $(document).ready(function() {
-            $('#vechile_table').DataTable({
-                columns :[
-                    {title: "Harga Beli", render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )}
+            $('#vechile_table').DataTable({ 
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel'
                 ]
             });
         } );
     </script>
 
+    <!--Delete-->
     <script>
         $(document).on('click', '.confirm-delete', function(){
             return confirm('Are you sure you want to delete this?');

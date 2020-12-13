@@ -2,6 +2,8 @@ from django import forms
 
 from .models import Season, Drop, Product, Order, Delivery, Vechile, VechileType, Vendor
 
+from datetime import datetime
+
 
 class SupplierForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={
@@ -83,18 +85,18 @@ class BuyerForm(forms.Form):
 class VechileForm(forms.ModelForm):
     class Meta:
         model = Vechile
-        fields = ['photo','no_polisi', 'alias', 'IDJenis', 'tanggal_stnk', 'status_stnk', 'tanggal_pembelian', 'harga_beli', 'scan_faktur_beli', 'vendor_id']
+        fields = '__all__'
 
         widgets = {
-            'no_polisi': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_polisi', 'data-val': 'true',
-                'data-val-required': 'Mohon Masukan Nomor Polisi !',}),
-            'alias': forms.TextInput(attrs={'class': 'form-control', 'id': 'alias', 'required':'true'}),
+            'no_polisi': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_polisi', 'style':'text-transform: uppercase'}),
+            'alias': forms.TextInput(attrs={'class': 'form-control', 'id': 'alias', 'required':'true', 'style':'text-transform: uppercase'}),
             'photo': forms.FileInput(attrs={'class': 'form-control'}),
-            'IDJenis': forms.Select(attrs={'class': 'form-control', 'id': 'IDJenis'}),
-            'tanggal_stnk': forms.DateInput(attrs={'type': 'date', 'required':'true'}),
-            'status_stnk': forms.Select(attrs={'class': 'form-control', 'id': 'status_stnk'}),
-            'tanggal_pembelian': forms.DateInput(attrs={'type': 'date'}),
-            'harga_beli': forms.TextInput(attrs={'class': 'form-control', 'id': 'harga_beli'}),
+            'jenis': forms.Select(attrs={'class': 'form-control', 'id': 'jenis'}),
+            'merek': forms.Select(attrs={'class': 'form-control', 'id': 'merek'}),
+            'jumlah_seat': forms.NumberInput(attrs={'class': 'form-control', 'id': 'jumlah_seat'}),
+            'tanggal_stnk': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
+            'tanggal_pembelian': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control'}),
+            'harga_beli': forms.NumberInput(attrs={'class': 'form-control', 'id': 'harga_beli'}),
             'scan_faktur_beli': forms.FileInput(attrs={'class': 'form-control'}),
             'vendor_id': forms.Select(attrs={'class': 'form-control', 'id': 'vendor_id'}),
         }
@@ -103,13 +105,10 @@ class VechileForm(forms.ModelForm):
 class VechileTypeForm(forms.ModelForm):
     class Meta:
         model = VechileType
-        fields = ['IDJenis', 'jenis', 'jumlah_seat', 'merek']
+        fields = ['jenis']
 
         widgets = {
-            'IDJenis': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_jenis'}),
-            'jenis': forms.Select(attrs={'class': 'form-control', 'id': 'jenis'}),
-            'jumlah_seat': forms.NumberInput(attrs={'class': 'form-control', 'id': 'jumlah_seat'}),
-            'merek': forms.TextInput(attrs={'class': 'form-control', 'id': 'merek'})
+            'jenis': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_jenis'}),
         }
 
 class VendorForm(forms.ModelForm):
