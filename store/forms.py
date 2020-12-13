@@ -108,7 +108,7 @@ class VechileTypeForm(forms.ModelForm):
         fields = ['jenis']
 
         widgets = {
-            'jenis': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_jenis'}),
+            'jenis': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_jenis', 'style':'text-transform: uppercase'}),
         }
 
 class VendorForm(forms.ModelForm):
@@ -117,12 +117,12 @@ class VendorForm(forms.ModelForm):
         fields = ['vendor_id', 'nama_vendor', 'alamat_vendor', 'pic_vendor', 'notelp_kantor', 'notelp_pic']
 
         widgets = {
-            'vendor_id': forms.TextInput(attrs={'class': 'form-control', 'id': 'vendors_id'}),
-            'nama_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'nama_vendor'}),
-            'alamat_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'alamat_vendor'}),
-            'pic_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'pic_vendor'}),
-            'notelp_kantor': forms.TextInput(attrs={'class': 'form-control', 'id': 'notelp_kantor'}),
-            'notelp_pic': forms.TextInput(attrs={'class': 'form-control', 'id': 'notelp_pic'})
+            'vendor_id': forms.TextInput(attrs={'class': 'form-control', 'id': 'vendors_id', 'style':'text-transform: uppercase'}),
+            'nama_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'nama_vendor', 'style':'text-transform: uppercase'}),
+            'alamat_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'alamat_vendor', 'style':'text-transform: uppercase'}),
+            'pic_vendor': forms.TextInput(attrs={'class': 'form-control', 'id': 'pic_vendor', 'style':'text-transform: uppercase'}),
+            'notelp_kantor': forms.TextInput(attrs={'class': 'form-control', 'id': 'notelp_kantor', 'style':'text-transform: uppercase'}),
+            'notelp_pic': forms.TextInput(attrs={'class': 'form-control', 'id': 'notelp_pic', 'style':'text-transform: uppercase'})
         }
 
 
