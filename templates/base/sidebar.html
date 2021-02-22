@@ -7,7 +7,7 @@
                 </li>
                 <li class="menu-title">Menu</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bus"></i>Armada</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-bus"></i>Armada</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-vechile' %}">Tambah Armada</a></li>
                         <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-vechile-type' %}">Tambah Jenis Armada</a></li>
@@ -17,15 +17,23 @@
                         <li><i class="fa fa-th"></i><a href="{% url 'vendor-list' %}">Lihat List Vendor</a></li>
                     </ul>
                 </li>
-                <!--
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-paper-plane"></i><s>Supplier</s></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-paper-plane"></i>Booking</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-supplier' %}">Add</a></li>
-                        <li><i class="fa fa-th"></i><a href="{% url 'supplier-list' %}">View</a></li>
+                        <li><i class="fa fa-th"></i><a href="{% url 'booking-list' %}">Lihat Pesanan</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-book' %}">Tambah Pesanan</a></li>
+                        <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-customer' %}">Tambah Customer</a></li>
+                        <li><i class="fa fa-th"></i><a href="{% url 'customer-list' %}">Data Customer</a></li>
+                        <!-- <li><i class="fa fa-th"></i><a href="{% url 'supplier-list' %}">Lihat List Customer</a></li> -->
                     </ul>
                 </li>
-
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa fa-money"></i>Kasir</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="fa fa-id-card-o"></i><a href="{% url 'book-list' %}">Daftar Pesanan</a></li>
+                    </ul>
+                </li>
+                <!--
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i><s>Buyer</s></a>
                     <ul class="sub-menu children dropdown-menu">
@@ -48,6 +56,7 @@
                         <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-drop' %}">Add</a></li>
                         <li><i class="fa fa-th"></i><a href="{% url 'drop-list' %}">View</a></li>
                     </ul>
+                except (ValueError, TypeError):
                 </li>
 
                 <li class="menu-item-has-children dropdown">
@@ -72,7 +81,7 @@
                         <li><i class="fa fa-id-card-o"></i><a href="{% url 'create-delivery' %}">Add</a></li>
                         <li><i class="fa fa-th"></i><a href="{% url 'delivery-list' %}">View</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

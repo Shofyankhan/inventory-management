@@ -28,13 +28,19 @@
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" /> -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.5.1/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.5.1/main.min.css">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" /> -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.5/b-html5-1.6.5/datatables.min.css"/>
 
-    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet"/> -->
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/jquery-ui.css' %}"> -->
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css"> --> -->
 
    <style>
     #weatherWidget .currentDesc {
@@ -123,18 +129,33 @@
     <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
-   <!-- <script src="{% static 'assets/js/init/weather-init.js' %}"></script> -->
+    <!-- <script src="{% static 'assets/js/init/weather-init.js' %}"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="{% static 'assets/js/jquery-1.12.4.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-ui.js' %}"></script> -->
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+    <!-- moment lib -->
+    <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.1/main.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.5.1/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.5.1/main.min.js"></script>
+
+    <!-- moment lib -->
+    <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
      
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/b-1.6.5/b-html5-1.6.5/datatables.min.js"></script>
     
-    <!--Script for Autocomple in Add vendor id-->
     
     <!-- autocomplete select box -->
     <script>
@@ -145,16 +166,53 @@
         });
     </script>
 
+    <!-- autocomplete select no_hp customer -->
+    <script>
+        $(function () {
+            $("#no_hp").autocomplete({
+                source: "{% url 'autocomplete' %}",
+                minLength: 2
+            });
+        });
+    </script>
+
+
+    
+    <!-- <script>
+        $("#id_nohp").change(function () {
+            const url = $("#customerForm").attr("data-csm-url");  // get the url of the `load_cities` view
+            const nohpId = $(this).val();  // get the selected country ID from the HTML input
+    
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                data: {
+                    'nohp_id': nohpId       // add the country id to the GET parameters
+                },
+                success: function (data) {   // `data` is the return of the `load_cities` view function
+                    $("#id_customer").html(data);  // replace the contents of the city input with the data that came from the server
+                    /*
+    
+                    let html_data = '<option value="">---------</option>';
+                    data.forEach(function (city) {
+                        html_data += `<option value="${city.id}">${city.name}</option>`
+                    });
+                    console.log(html_data);
+                    $("#id_city").html(html_data);
+    
+                    */
+                }
+            });
+    
+        });
+    </script> -->
+ 
     <!-- datatables -->
     <script>
         $(document).ready(function() {
-            $('#vechile_table').DataTable({ 
-                dom: 'Bfrtip',
-                buttons: [
-                    'excel'
-                ]
-            });
-        } );
+            $('#vechile_table').DataTable();
+            $('#customer_table').DataTable();
+            $('#booking_table').DataTable();
+        });
     </script>
 
     <!--Delete-->

@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Buat Pembayaran{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li class="active">Buat Pembayaran</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Buat Pembayaran</strong>
+            </div>
+            <div class="card-body">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{field.label}}: <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{field.label}}: <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+                        {% load humanize %}
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="control-label mb-1">ID Booking  =  {{ ibk.idbooking }}</label>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-6 col-form-label">Harga Jual</label>
+                                    <div class="col-sm-4">
+                                        <div class="form-control">{{ ibk.harga_jual|intcomma  }}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">                   
+                                    <label class="col-sm-6 col-form-label">Telah Dibayar</label>
+                                    <div class="col-sm-4">
+                                        <div class="form-control">{{ ibk.dana_masuk|intcomma }}</div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                        <br>
+                        <form action="#" method="post" id="paymentForm" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="nominal_pembayaran" class="col-sm-2 col-form-label">Nominal Pembayaran</label>
+                                <div class="col-sm-10">
+                                    {{ form.idbooking }}
+                                    {{ form.nominal_pembayaran }}
+                                    {{ form.tanggal_pembayaran }}
+                                </div>
+                            </div>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                    <span id="payment-button-amount">Buat Pembayaran</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.colss-->
+</div>
+
+<script>
+    $("#idbooking").change(function () {
+      var url = $("#paymentForm").attr("data-cities-url");  // get the url of the `load_cities` view
+      var idbooking = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'idbooking': idbooking       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+            var json = data,
+            obj = JSON.parse(json);
+            $("#harga_jual").val(obj.harga_jual);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+{% endblock content %}

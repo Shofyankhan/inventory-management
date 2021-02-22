@@ -13,9 +13,12 @@ class Vendor(models.Model):
     def save(self, force_insert=False, force_update=False):
         self.vendor_id = self.vendor_id.upper()
         self.nama_vendor = self.nama_vendor.upper()
-        self.pic_vendor = self.pic_vendor.upper()
-        self.notelp_kantor = self.notelp_kantor.upper()
-        self.notelp_pic = self.notelp_pic.upper()
+        try:
+            self.pic_vendor = self.pic_vendor.upper()
+            self.notelp_kantor = self.notelp_kantor.upper()
+            self.notelp_pic = self.notelp_pic.upper()
+        except:
+            pass
         super(Vendor, self).save(force_insert, force_update)
 
     def __str__(self):

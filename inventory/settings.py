@@ -32,6 +32,8 @@ ALLOWED_HOSTS = ['147.139.163.37','localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.humanize',
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     # local
     'store.apps.StoreConfig',
     'users.apps.UsersConfig',
+    'booking.apps.BookingConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,9 +129,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 

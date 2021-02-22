@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Daftar Pemesanan Armada{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li class="active">Daftar Pemesanan Armada</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Daftar Pemesanan Armada</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-stats table-striped" >
+                    <table id="booking_table" class="display compact"">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID Booking</th>
+                                <th>Tanggal Pemesanan</th>
+                                <th>No Polisi</th>
+                                <th>Nama Customer</th>
+                                <th>Tanggal Berangkat</th>
+                                <th>Tanggal Tiba</th>
+                                <th>Harga Jual</th>
+                                <th>Pembayaran Yang Diterima</th>
+                                <th>Status Pembayaran</th>
+                                <th>Riwayat Pembayaran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if book %}
+                                {% for book in book %}
+                                {% load humanize %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ book.idbooking|default_if_none:"-"  }}</td>
+                                    <td>{{ book.tanggal_pemesanan|default_if_none:"-"  }}</td>
+                                    <td>{{ book.resourceId|default_if_none:"-"  }}</td>
+                                    <td>{{ book.nm_pelanggan|default_if_none:"-"  }}</td>
+                                    <td>{{ book.start|default_if_none:"-" }}</td>
+                                    <td>{{ book.end_date|default_if_none:"-" }}</td>
+                                    <td>{{ book.harga_jual|default_if_none:"-"|intcomma }}</td>
+                                    <td>{{ book.dana_masuk|default_if_none:"-"|intcomma }}</td>
+                                    <td>
+                                        {% if book.get_backgroundColor_display == 'Pending' %}
+                                            <a class="btn btn-primary" href="{% url 'create-payment'  %}?idbooking={{ book.idbooking }}">{{ book.get_backgroundColor_display }}</a>
+                                        {% elif book.get_backgroundColor_display == 'Down Payment' %}
+                                            <a class="btn btn-warning" href="{% url 'create-payment' %}?idbooking={{ book.idbooking }}">{{ book.get_backgroundColor_display }}</a>
+                                        {% elif book.get_backgroundColor_display == 'Full Payment' %}
+                                            <a class="btn btn-success">{{ book.get_backgroundColor_display }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if book.get_backgroundColor_display == 'Pending' %}
+                                            -
+                                        {% elif book.get_backgroundColor_display == 'Down Payment' %}
+                                            <a href="{% url 'payment-history' %}?idbooking={{ book.idbooking }}">Lihat</a>
+                                        {% elif book.get_backgroundColor_display == 'Full Payment' %}
+                                            <a href="{% url 'payment-history' %}?idbooking={{ book.idbooking }}">Lihat</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr><td>Daftar Pemesanan Tidak ada</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->  
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+    
+</div>
+{% endblock content %}
+

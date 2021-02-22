@@ -25,6 +25,7 @@ urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('users/', include('users.urls')),
     path('store/', include('store.urls')),
+    path('booking/', include('booking.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

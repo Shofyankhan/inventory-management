@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Riwayat Pembayaran{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Armada</a></li>
+                            <li><a href="/store/book-list">Daftar Pemesanan Armada</a></li>
+                            <li class="active">Riwayat Pembayaran</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Riwayat Pembayaran</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-stats table-striped" >
+                    <table id="paymenthistory_table">
+                        <thead>
+                            <tr>
+                                <th>Pembayaran Ke</th>
+                                <th>Tanggal Pembayaran</th>
+                                <th>Nominal Pembayaran</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if paid %}
+                                {% for paid in paid %}
+                                {% load humanize %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ paid.tanggal_pembayaran }}</td>
+                                    <td>{{ paid.nominal_pembayaran|intcomma  }}</td>
+                                    <td><a href="">Cetak</a></td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

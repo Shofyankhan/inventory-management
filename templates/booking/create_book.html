@@ -1,0 +1,151 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Buat Pesanan{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li class="active">Buat Pesanan</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Buat Pesanan</strong>
+            </div>
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">    
+                        {% if cform.errors %}
+                            {% for field in cform %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{field.label}}: <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in cform.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{field.label}}: <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        {{field.label}}: <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {{field.label}}: <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form action="#" method="post" id="customerForm" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="no_hp" class="control-label mb-1">No HP</label>
+                                        {{ cform.no_hp }}
+                                   </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="nama_pelanggan" class="control-label mb-1">Nama Pelanggan</label>
+                                        {{ cform.nama_pelanggan }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                                {{ form.idbooking }}
+                            <div class="form-group row">
+                                <label for="no_polisi" class="col-sm-2 col-form-label">No Polisi <a style='color:red'>*</a></label>
+                                <div class="col-sm-10">
+                                    {{ form.resourceId }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tanggal_berangkat" class="col-sm-2 col-form-label">Tanggal Berangkat</label>
+                                <div class="col-sm-10">
+                                    {{ form.start }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tanggal_tiba" class="col-sm-2 col-form-label">Tanggal Tiba</label>
+                                <div class="col-sm-10">
+                                    {{ form.end }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="harga_jual" class="col-sm-2 col-form-label">Harga Jual</label>
+                                <div class="col-sm-10">
+                                    {{ form.harga_jual }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="uang_jalan" class="col-sm-2 col-form-label">Uang Jalan</label>
+                                <div class="col-sm-10">
+                                    {{ form.uang_jalan }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="parkir_bensin" class="col-sm-2 col-form-label">Parkir Bensin</label>
+                                <div class="col-sm-10">
+                                    {{ form.parkir_bensin }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="note" class="col-sm-2 col-form-label">Catatan Khusus</label>
+                                <div class="col-sm-10">
+                                    {{ form.note }}
+                                    {{ form.dana_masuk }}
+                                </div>
+                            </div>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" name="createcustomer">
+                                    <span id="payment-button-amount">Buat Pesanan</span>
+                                </button>
+                            </div>
+                        </form>                     
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- .card -->
+
+    </div><!--/.colss-->
+</div>
+
+
+{% endblock content %}

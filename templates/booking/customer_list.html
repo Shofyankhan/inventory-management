@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Data Pelanggan{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li class="active">Data Pelanggan</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Data Pelanggan</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-stats table-striped" >
+                    <table id="customer_table" class="display compact"">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Tipe</th>
+                                <th>Alamat</th>
+                                <th>No Hp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if cus %}
+                                {% for cus in cus %}
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ cus.nama_pelanggan|default_if_none:"-"  }}</td>
+                                    <td>{{ cus.tipe|default_if_none:"-"  }}</td>
+                                    <td>{{ cus.alamat_pelanggan|default_if_none:"-" }}</td>
+                                    <td>{{ cus.no_hp|default_if_none:"-" }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr><td>Data Pelanggan Tidak ada</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->  
+            </div>
+        </div> <!-- /.card -->
+    </div>  <!-- /.col-lg-8 -->
+    
+</div>
+{% endblock content %}
+
