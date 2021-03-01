@@ -46,6 +46,8 @@
                                 <th>Tipe</th>
                                 <th>Alamat</th>
                                 <th>No Hp</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +58,16 @@
                                     <td>{{ cus.tipe|default_if_none:"-"  }}</td>
                                     <td>{{ cus.alamat_pelanggan|default_if_none:"-" }}</td>
                                     <td>{{ cus.no_hp|default_if_none:"-" }}</td>
+                                    <td>
+                                        <a class="btn btn-info" href="{% url 'edit-customer' cus.id %}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{% url 'delete-customer' cus.id %}" onclick="return confirm('Anda yakin akan mendelete data ini ?');">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             {% else %}

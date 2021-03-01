@@ -19,6 +19,7 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db.models import Sum
+from django import forms
 
 def vechilejsonlist(request):
     vechile = Vechile.objects.all().values('id','no_polisi', 'alias',)
@@ -67,6 +68,37 @@ def create_customer(request):
         'cform': forms
     }
     return render(request, 'booking/create_customer.html', context)
+
+
+class CustomerListView(ListView):
+    model = Customer
+    template_name = 'booking/customer_list.html'
+    context_object_name = 'cus'
+
+#update customer
+def edit_customer(request, pk):
+    customer = Customer.objects.get(id=pk)
+    form = CustomerForm(instance=customer)
+    if request.method == 'POST':
+        form = CustomerForm(request. POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('customer-list')
+        else:
+            print(form.errors)
+    context = {
+        'form': form
+    }
+    return render(request, 'booking/edit_customer.html', context)
+
+
+#delete customer
+def delete_customer(request, pk):
+    customer = Customer.objects.get(id=pk)
+    customer.delete()
+    return redirect('customer-list')
+    #return render(request, 'store/arm_list.html')\
+
 
 @login_required(login_url='login')
 def create_payment(request):
@@ -117,11 +149,6 @@ def payment_history(request):
     }
     return render(request, 'booking/history_payment_view.html', context)
 
-class CustomerListView(ListView):
-    model = Customer
-    template_name = 'booking/customer_list.html'
-    context_object_name = 'cus'
-
 class BookingListView(ListView):
     model = Booking
     template_name = 'booking/book_list.html'
@@ -162,6 +189,11 @@ def create_book(request):
             uang_jalan = booking_forms.cleaned_data['uang_jalan']
             parkir_bensin = booking_forms.cleaned_data['parkir_bensin']
             note = booking_forms.cleaned_data['note']
+            
+            res_all = Booking.objects.all().filter(resourceId=resourceId)
+            for item in res_all:
+                if start <= item.start and item.start <= end or start <= item.end_date and item.end_date <= end:
+                    return HttpResponse('Tanggal ini telah dipesan dengan kendaraan yang sama !')
 
             Booking.objects.create(
                 idbooking=idbooking,
@@ -173,7 +205,7 @@ def create_book(request):
                 uang_jalan=uang_jalan,
                 parkir_bensin=parkir_bensin,
                 note=note,
-                title=resourceId,
+                title=idbooking,
                 nm_pelanggan=Customer.objects.get(no_hp=no_hp),
             ),
             return redirect('booking-list')
@@ -190,9 +222,93 @@ def create_book(request):
     return render(request, 'booking/create_book.html', context)
 
 @login_required(login_url='login')
+def edit_book(request, pk):
+    booking = Booking.objects.get(idbooking=pk)
+    booking_forms = BookingForm(instance=booking)
+    customer_forms = CustomerForm(initial={
+            'no_hp': request.GET.get('no_hp'),
+            'nama_pelanggan': request.GET.get('nama_pelanggan')
+        })
+    if request.method == 'POST':
+        booking_forms = BookingForm(request.POST)
+        customer_forms = CustomerForm(request.POST)
+        if customer_forms.is_valid() and booking_forms.is_valid():
+            nama_pelanggan = customer_forms.cleaned_data['nama_pelanggan']
+            no_hp = customer_forms.cleaned_data['no_hp']
+
+            # nmpl = request.POST['nama_pelanggan']
+            # nm_pl = {"nama_pelanggan": nmpl}
+
+            customer, _ = Customer.objects.get_or_create(no_hp=customer_forms.cleaned_data['no_hp'],
+            defaults={
+                'nama_pelanggan': customer_forms.cleaned_data['nama_pelanggan'],
+                'alamat_pelanggan': '',
+                'tipe': ''
+            },)
+
+            idbooking = booking_forms.cleaned_data['idbooking']
+            resourceId = booking_forms.cleaned_data['resourceId']
+            start = booking_forms.cleaned_data['start']
+            end = booking_forms.cleaned_data['end']
+            harga_jual = booking_forms.cleaned_data['harga_jual']
+            uang_jalan = booking_forms.cleaned_data['uang_jalan']
+            parkir_bensin = booking_forms.cleaned_data['parkir_bensin']
+            note = booking_forms.cleaned_data['note']
+            
+            res_all = Booking.objects.all().filter(resourceId=resourceId)
+            for item in res_all:
+                if start <= item.start and item.start <= end or start <= item.end_date and item.end_date <= end:
+                    return HttpResponse('Tanggal ini telah dipesan dengan kendaraan yang sama !')
+
+            Booking.objects.create(
+                idbooking=idbooking,
+                resourceId=resourceId,
+                start=start,
+                end=end+timedelta(days=1),
+                end_date=end,
+                harga_jual=harga_jual,
+                uang_jalan=uang_jalan,
+                parkir_bensin=parkir_bensin,
+                note=note,
+                title=idbooking,
+                nm_pelanggan=Customer.objects.get(no_hp=no_hp),
+            ),
+            return redirect('booking-list')
+
+        else:
+            print(booking_forms.errors)
+            print(customer_forms.errors)
+        
+    context = {
+        'cform': customer_forms,
+        'form': booking_forms,
+    }
+
+    return render(request, 'booking/create_book.html', context)
+
+def delete_book(request, pk):
+    booking = Booking.objects.get(idbooking=pk)
+    booking.delete()
+    return redirect('booking-list')
+
+
+@login_required(login_url='login')
 def booking_list(request):
     
     return render(request, 'booking/booking_list.html')
+
+
+@login_required(login_url='login')
+def booking_detail_view(request):
+    idbook = request.GET.get('idbooking')
+    form = Booking.objects.get(idbooking=idbook)
+    paid_order = form.order_set.all()
+    context = {
+        'form': form,
+        'cform': paid_order
+    }
+    return render(request, 'booking/booking_detail.html', context)
+
 
 # AJAX
 def load_customer(request):

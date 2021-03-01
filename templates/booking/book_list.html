@@ -47,7 +47,6 @@
                                 <th>No Polisi</th>
                                 <th>Nama Customer</th>
                                 <th>Tanggal Berangkat</th>
-                                <th>Tanggal Tiba</th>
                                 <th>Harga Jual</th>
                                 <th>Pembayaran Yang Diterima</th>
                                 <th>Status Pembayaran</th>
@@ -65,7 +64,6 @@
                                     <td>{{ book.resourceId|default_if_none:"-"  }}</td>
                                     <td>{{ book.nm_pelanggan|default_if_none:"-"  }}</td>
                                     <td>{{ book.start|default_if_none:"-" }}</td>
-                                    <td>{{ book.end_date|default_if_none:"-" }}</td>
                                     <td>{{ book.harga_jual|default_if_none:"-"|intcomma }}</td>
                                     <td>{{ book.dana_masuk|default_if_none:"-"|intcomma }}</td>
                                     <td>

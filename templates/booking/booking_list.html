@@ -43,6 +43,7 @@
                         <p><a style='color:#33f8bc'>[*]PENDING</a> || <a style='color:yellow'>[*]DOWN PAYMENT </a> || <a style='color:green'>[*]FULL PAYMENT </a></p>
                         <div id='calendar'>
                         </div>
+                        <p>Calendar by <a href="https://fullcalendar.io" target="_blank" >Fullcalendar.io</a></p>
                     </div>
                 </div>
 
@@ -65,7 +66,10 @@
                 window.open("{% url 'create-book' %}?resourceId=" + encodeURIComponent(info.resource.id) + "&start=" + encodeURIComponent(info.dateStr),"_self");
             },
             eventClick: function(info) {
-                alert('No Polisi: ' + info.event.title);
+                var eventObj = info.event.title
+
+                window.open("{% url 'booking-detail' %}?idbooking="+ eventObj,"_self");
+                // alert('No Polisi: ' + info.event.title);
 
                 // change the border color just for fun
                 info.el.style.borderColor = 'red';
@@ -77,18 +81,11 @@
                     type: 'resourceTimeline',
                     duration: { weeks: 2 },
                     slotDuration: {days: 1},
-                    // slotLabelFormat: {
-                    //     hour: '2-digit',
-                    //     minute: '2-digit',
-                    //     omitZeroMinute: false,
-                    //     meridiem: 'false',
-                    //     hour12: false
-                    // },
+
                     slotLabelFormat: [
                         { month: 'short', year: 'numeric'},
                         { day: '2-digit' },
                         { weekday: 'short' }, // top level of text
-                        // { weekday: 'short' } // lower level of text
                     ],
                 }
             },
@@ -110,59 +107,10 @@
             resources: {
                 url: "{% url 'vechilejson' %}",
             },
-            // eventSources: [
-            // // your event source
-            // {
-            //     url: "{% url 'bookingjson' %}", // use the `url` property
-            //     allDay: 'true'
-            // }
-            // ]
-            // events: [
-            //     {
-            //         id: '1',
-            //         resourceId: '1',
-            //         title  : 'event3',
-            //         start  : '2021-02-20',
-            //         end    : '2021-02-23T23:59:59',
-            //         // allDay : 'True',
-                    
-            //     }
-            // ]
+
             events:  "{% url 'bookingjson' %}",
         });
         calendar.render();
      });
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     var calendarEl = document.getElementById('calendar');
-
-    //     var calendar = new FullCalendar.Calendar(calendarEl, {
-    //         timeZone: 'local',
-    //         initialView: 'twoWeek',
-            
-    //         views: {
-    //             twoWeek: {
-    //                 // titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' },
-    //                 eventContent: { html: '<i>some html</i>' },
-    //                 dayHeaderFormat: { day: '2-digit', omitCommas: true },
-    //                 type: 'timeGridWeek',
-    //                 duration: { weeks: 2 },
-    //                 buttonText: '2 weeks',
-    //                 slotLabelFormat: {
-    //                     hour: '2-digit',
-    //                     minute: '2-digit',
-    //                     omitZeroMinute: false,
-    //                     meridiem: 'false',
-    //                     hour12: false
-    //                 },
-    //             }
-    //         },
-    //         headerToolbar: {
-    //             left: 'prev,next today',
-    //             center: 'title',
-    //             right: '',
-    //         },
-    //     });
-    //     calendar.render();
-    // });
 </script>
 {% endblock content %}

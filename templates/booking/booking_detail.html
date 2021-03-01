@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Detail Booking{% endblock title %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li><a href="#">Booking</a></li>
+                            <li><a href="/store/booking-list">Booking List</a></li>
+                            <li class="active">Detail Booking</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="box-title">Detail Booking</h4>
+            </div>
+            <div class="card-body">
+                <div class="table table-striped" >
+                    <table id="detailbooking_table">
+                        <tbody>
+                            <tr>
+                                <td><th scope="row">Nama Pelanggan</th></td>
+                                <td>{{ form.nm_pelanggan }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">No HP</th></td>
+                                <td>{{ form.nm_pelanggan.no_hp }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">ID Booking</th></td>
+                                <td>{{ form.idbooking }}</td>
+                            </tr>
+                                <tr>
+                                    <td><th scope="row">Tanggal Pemesanan</th></td>
+                                    <td>{{ form.tanggal_pemesanan}}</td>
+                                </tr>
+                            <tr>
+                                <td><th scope="row">No Polisi</th></td>
+                                <td>{{ form.resourceId }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Tanggal Berangkat</th></td>
+                                <td>{{ form.start }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Tanggal Tiba</th></td>
+                                <td>{{ form.end_date }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Harga Jual</th></td>
+                                {% load humanize %}
+                                <td>{{ form.harga_jual|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Uang Jalan</th></td>
+                                <td>{{ form.uang_jalan|default_if_none:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Uang Parkir Bensin</th></td>
+                                <td>{{ form.parkir_bensin|default_if_none:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Catatan</th></td>
+                                <td>{{ form.note|default_if_none:"-" }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">Pembayaran yang diterima</th></td>
+                                <td>{{ form.dana_masuk|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td><th scope="row">
+                                    <a class="btn btn-lg btn-info btn-block" href="{% url 'edit-book' form.idbooking %}?no_hp={{ form.nm_pelanggan.no_hp }}&nama_pelanggan={{ form.nm_pelanggan}}">
+                                        Edit
+                                    </a>
+                                </th></td>
+                                <td>
+                                    {% if form.dana_masuk == 0 %}
+                                        <a class="btn btn-lg btn-danger btn-block" href="{% url 'delete-book' form.idbooking %}" onclick="return confirm('Anda yakin akan mendelete data ini ?');"> Hapus </a>
+                                    {% elif form.dana_masuk > 0 %}
+                                        <a class="btn btn-lg btn-secondary btn-block" onclick="return confirm('Pemesanan sudah dilakukan pembayaran, Tidak dapat dihapus !!');">Hapus</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

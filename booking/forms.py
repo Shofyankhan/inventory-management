@@ -42,15 +42,20 @@ class BookingForm(forms.ModelForm):
         end = self.cleaned_data['end']
         resourceId = self.cleaned_data['resourceId']
 
-        res_all = Booking.objects.all()
-        for item in res_all:
-            #make sure no duplicate booking
-            if Booking.objects.filter(start__range=[item.start, item.end_date], resourceId=resourceId).exists():
-                raise forms.ValidationError("Tanggal ini sudah dipesan dengan tipe bus yang sama, silahkan pilih tanggal lain atau bus lain !")
+        # if start:
+        #     st = Booking.objects.filter(start__range=[start, end], resourceId=resourceId)
+        #     if st.exists():
+        #         raise forms.ValidationError("Tanggal sudah dipesan dengan kendaraan yang sama!")
+            
+        # checking if date is not in the past,
+        if start < date.today():
+            raise forms.ValidationError("Tidak bisa memilih tanggal yang sudah lewat !")
 
-        # checking if date is not in the past and today,
-        if start < date.today()+ timedelta(days=1):
-            raise forms.ValidationError("Tidak bisa memilih tanggal yang sudah lewat, atau hari ini !")
+        # checking end date must not higher than start date,
+        if end < start:
+            raise forms.ValidationError("Tanggal tiba tidak dapat lebih dulu dari tanggal berangkat !")
+
+
 
 class OrderForm(forms.ModelForm):
     class Meta:

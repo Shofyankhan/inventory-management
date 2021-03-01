@@ -49,8 +49,6 @@
                                 <th>Merek</th>
                                 <th>Jumlah Seat</th>
                                 <th>Tanggal STNK</th>
-                                <th>Tanggal Pembelian</th>
-                                <th>Harga Beli</th>
                                 <th>Scan Faktur Pembelian</th>
                                 <th>Vendor Id</th>
                                 <th>-</th>
@@ -78,11 +76,6 @@
                                     <td>{{ arm.jumlah_seat|default_if_none:"-" }}</td>
                                     <td {% if arm.expires_today %} class="blinkme" {% endif %}>
                                         {{ arm.tanggal_stnk|default_if_none:"-"  }}
-                                    </td>
-                                    <td>{{ arm.tanggal_pembelian|default_if_none:"-" }}</td>
-                                    <td>{% load humanize %}
-                                        {{ arm.harga_beli|default_if_none:"-"|intcomma }}
-
                                     </td>
                                     <td>
                                         {% if arm.scan_faktur_beli %}
