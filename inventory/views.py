@@ -13,6 +13,9 @@ def dashboard(request):
     startdate = datetime.now()+timedelta(days=1)
     enddate = datetime.now()+timedelta(days=31)
 
+    startrecent = datetime.now()
+    endrecent = datetime.now()+timedelta(days=4)
+
     total_vechile = Vechile.objects.count()
     total_product = Product.objects.count()
     total_supplier = Supplier.objects.count()
@@ -23,7 +26,7 @@ def dashboard(request):
     # orders = Order.objects.all().order_by('-id')
 
     expired_stnk = Vechile.objects.filter(Q(tanggal_stnk__range = [startdate, enddate] ) | Q(tanggal_stnk__lte = datetime.now().date()))
-    recent_order = Booking.objects.filter(Q(start__range = [datetime.now().date(), datetime.now()+timedelta(days=3)] ))
+    recent_order = Booking.objects.filter(Q(start__range = [startrecent, endrecent]))
 
     context = {
         'vechile': total_vechile,

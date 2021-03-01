@@ -56,7 +56,7 @@ class Order(models.Model):
     tanggal_pembayaran = models.DateField(default=date.today)
 
     def __str__(self):
-        return self.id
+        return str(self.idbooking)
 
 
 # # class Event(models.Model):
