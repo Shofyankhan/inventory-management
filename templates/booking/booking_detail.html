@@ -44,51 +44,63 @@
                             <tr>
                                 <td><th scope="row">Nama Pelanggan</th></td>
                                 <td>{{ form.nm_pelanggan }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">No HP</th></td>
                                 <td>{{ form.nm_pelanggan.no_hp }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">ID Booking</th></td>
                                 <td>{{ form.idbooking }}</td>
+                                <td></td>
                             </tr>
                                 <tr>
                                     <td><th scope="row">Tanggal Pemesanan</th></td>
                                     <td>{{ form.tanggal_pemesanan}}</td>
+                                    <td></td>
                                 </tr>
                             <tr>
                                 <td><th scope="row">No Polisi</th></td>
                                 <td>{{ form.resourceId }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Tanggal Berangkat</th></td>
                                 <td>{{ form.start }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Tanggal Tiba</th></td>
                                 <td>{{ form.end_date }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Harga Jual</th></td>
                                 {% load humanize %}
                                 <td>{{ form.harga_jual|intcomma }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Uang Jalan</th></td>
                                 <td>{{ form.uang_jalan|default_if_none:"-" }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Uang Parkir Bensin</th></td>
                                 <td>{{ form.parkir_bensin|default_if_none:"-" }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Catatan</th></td>
                                 <td>{{ form.note|default_if_none:"-" }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">Pembayaran yang diterima</th></td>
                                 <td>{{ form.dana_masuk|intcomma }}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><th scope="row">
@@ -103,6 +115,7 @@
                                         <a class="btn btn-lg btn-secondary btn-block" onclick="return confirm('Pemesanan sudah dilakukan pembayaran, Tidak dapat dihapus !!');">Hapus</a>
                                     {% endif %}
                                 </td>
+                                <td><a class="btn btn-lg btn-success btn-block" href="{% url 'booking-print' form.idbooking %}">Cetak</a></td>
                             </tr>
 
                         </tbody>
