@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Kwitansi | {{ datas }}</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+        <style>
+            table.tbls tr td{
+                font-size: 15px;
+            }
+        </style>
+        <script src='main.js'></script>
+    </head>
+    <body>
+        {% load static %}
+        <img src="static/images/screen.jpg" alt="Logo">
+        <hr>
+        <h1 style="text-align:center">BUKTI PENERIMAAN</h1>
+        <table class="tbls">
+            <thead>
+                <tr>
+                  <th style="width: 25%"></th>
+                  <th style="width: 25px"></th>
+                  <th style="width: 20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Booking ID </td>
+                    <td>:</td>
+                    <td>{{ datas }}</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td>Nama Pelanggan </td>
+                    <td>:</td>
+                    <td>{{ booking.nm_pelanggan }}</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Pembayaran</td>
+                    <td>:</td>
+                    <td>{{ datas.tanggal_pembayaran }}</td>
+                </tr>
+                <tr>
+                    <td>Nominal Pembayaran </td>
+                    <td>:</td>
+                    {% load humanize %}
+                    <td>Rp. {{ datas.nominal_pembayaran|intcomma }}</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td>Harga </td>
+                    <td>:</td>
+                    <td>Rp. {{ booking.harga_jual|intcomma }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <table class="tbls">
+            <thead>
+                <tr>
+                  <th style="width: 35%"></th>
+                  <th style="width: 30%"></th>
+                  <th style="width: 35%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center", style="font-weight:bold">Diperiksa,</td>
+                    <td align="center", style="font-weight:bold">Kasir,</td>
+                    <td align="center", style="font-weight:bold">Pembayar,</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    
+                </tr>
+                <tr>
+                    <td align="center">.....................</td>
+                    <td align="center">.....................</td>
+                    <td align="center">.....................</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

@@ -33,8 +33,8 @@ class Booking(models.Model):
     idbooking = models.CharField(default = random_string, max_length=10, primary_key=True)
     resourceId = models.ForeignKey(Vechile, on_delete=models.SET_NULL, null=True)
     start = models.DateField(null=True)
-    end = models.DateField(null=True)
-    end_date = models.DateField(null=True, blank='True')
+    end = models.DateField(null=True, blank='True')
+    end_date = models.DateField(null=True)
     harga_jual = models.DecimalField(max_digits=10, decimal_places=0, null=True)
     dana_masuk = models.DecimalField(default = 0, max_digits=10, decimal_places=0)
     tanggal_pemesanan = models.DateField(auto_now_add=True)
@@ -57,20 +57,3 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.idbooking)
-
-
-# # class Event(models.Model):
-# #     start_time = models.DateTimeField()
-# #     end_time = models.DateTimeField()
-# #     created_date = models.DateTimeField(auto_now_add=True)
-
-# #     def __str__(self):
-# #         return self.created_date
-    
-# #     def get_absolute_url(self):
-# #         return reverse('bookingapp:event-detail', args=(self.id,))
-
-# #     @property
-# #     def get_html_url(self):
-# #         url = reverse('bookingapp:event-detail', args=(self.id,))
-# #         return f'<a href="{url}"> {self.created_date} </a>'

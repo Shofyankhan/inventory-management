@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Kwitansi | {{ datas }}</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+        <style>
+            table.tbls tr td{
+                font-size: 15px;
+            }
+        </style>
+        <script src='main.js'></script>
+    </head>
+    <body>
+        {% load static %}
+        <img src="static/images/screen.jpg" alt="Logo">
+        <hr>
+        <h1 style="text-align:center">NOTA PESANAN</h1>
+        <table class="tbls">
+            <thead>
+                <tr>
+                  <th style="width: 25%"></th>
+                  <th style="width: 25px"></th>
+                  <th style="width: 20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Booking ID </td>
+                    <td>:</td>
+                    <td>{{ booking.idbooking }}</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td>Nama Pelanggan </td>
+                    <td>:</td>
+                    <td>{{ booking.nm_pelanggan }}</td>
+                </tr>
+                <tr>
+                    <td>Nomor Handphone </td>
+                    <td>:</td>
+                    <td>{{ booking.nm_pelanggan.no_hp }}</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td>Tanggal Pemesanan<h/td>
+                    <td>:</td>
+                    <td>{{ booking.tanggal_pemesanan }}</td>
+                </tr>
+                {% load humanize %}
+                <tr>
+                    <td>Harga </td>
+                    <td>:</td>
+                    <td>Rp. {{ booking.harga_jual|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td>Dana Masuk </td>
+                    <td>:</td>
+                    <td>Rp. {{ datas.dana_masuk|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Berangkat </td>
+                    <td>:</td>
+                    <td>{{ booking.start }}</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Kembali </td>
+                    <td>:</td>
+                    <td>{{ booking.end_date }}</td>
+                </tr>
+                <tr>
+                    <td>Catatan</td>
+                    <td>:</td>
+                    <td>{{ booking.note }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <table class="tbls">
+            <thead>
+                <tr>
+                  <th style="width: 50%"></th>
+                  <th style="width: 50%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center", style="font-weight:bold">Pemesan,</td>
+                    <td align="center", style="font-weight:bold">Pandawa 87,</td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    
+                </tr>
+                <tr>
+                    <td align="center">.....................</td>
+                    <td align="center">.....................</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

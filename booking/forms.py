@@ -16,7 +16,7 @@ class CustomerForm(forms.ModelForm):
             'nama_pelanggan': forms.TextInput(attrs={'class': 'form-control', 'id': 'nama_pelanggan', }),
             'alamat_pelanggan': forms.TextInput(attrs={'class': 'form-control', 'id': 'alamat_pelanggan', }),
             'tipe': forms.Select(attrs={'class': 'form-control', 'id': 'tipe', }),
-            'no_hp': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_hp'}),
+            'no_hp': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_hp', }),
         }
     
 
@@ -29,7 +29,7 @@ class BookingForm(forms.ModelForm):
             'idbooking': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'id_booking', 'style':'text-transform: uppercase'}),
             'resourceId': forms.Select(attrs={'class': 'form-control', 'id': 'no_polisi'}),
             'start' : forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
-            'end' : forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
+            'end_date' : forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
             'harga_jual': forms.NumberInput(attrs={'class': 'form-control', 'id': 'harga_jual'}),
             'uang_jalan': forms.NumberInput(attrs={'class': 'form-control', 'id': 'uang_jalan'}),
             'parkir_bensin': forms.NumberInput(attrs={'class': 'form-control', 'id': 'parkir_bensin'}),
@@ -39,22 +39,53 @@ class BookingForm(forms.ModelForm):
     
     def clean(self):
         start = self.cleaned_data['start']
-        end = self.cleaned_data['end']
+        end_date = self.cleaned_data['end_date']
         resourceId = self.cleaned_data['resourceId']
 
-        # if start:
-        #     st = Booking.objects.filter(start__range=[start, end], resourceId=resourceId)
-        #     if st.exists():
-        #         raise forms.ValidationError("Tanggal sudah dipesan dengan kendaraan yang sama!")
-            
-        # checking if date is not in the past,
-        if start < date.today():
-            raise forms.ValidationError("Tidak bisa memilih tanggal yang sudah lewat !")
-
-        # checking end date must not higher than start date,
-        if end < start:
+        if end_date < start:
             raise forms.ValidationError("Tanggal tiba tidak dapat lebih dulu dari tanggal berangkat !")
 
+        res_all = Booking.objects.all().filter(resourceId=resourceId)
+        for item in res_all:
+            if start <= item.start and item.start <= end_date or start <= item.end_date and item.end_date <= end_date:
+                raise forms.ValidationError("Bus telah dipesan di tanggal yang sama, Silahkan pilih bus lain atau tanggal lainnya !")
+
+
+class BookingEditForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+
+        widgets = {
+            'idbooking': forms.HiddenInput(attrs={'class': 'form-control', 'id': 'id_booking', 'style':'text-transform: uppercase'}),
+            'resourceId': forms.Select(attrs={'class': 'form-control', 'id': 'no_polisi'}),
+            'start' : forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
+            'end_date' : forms.DateInput(format=('%Y-%m-%d'), attrs={'type': 'date', 'class': 'form-control', 'required':'true'}),
+            'harga_jual': forms.NumberInput(attrs={'class': 'form-control', 'id': 'harga_jual'}),
+            'uang_jalan': forms.NumberInput(attrs={'class': 'form-control', 'id': 'uang_jalan'}),
+            'parkir_bensin': forms.NumberInput(attrs={'class': 'form-control', 'id': 'parkir_bensin'}),
+            'note': forms.Textarea(attrs={'class': 'form-control', 'id': 'note'}),
+            'dana_masuk': forms.HiddenInput(attrs={'class': 'form-control', 'id':'dana_masuk'}),
+        }
+    
+    def clean(self):
+        start = self.cleaned_data['start']
+        end_date = self.cleaned_data['end_date']
+        resourceId = self.cleaned_data['resourceId']
+        idbooks = self.cleaned_data['idbooking']
+
+
+        if end_date < start:
+            raise forms.ValidationError("Tanggal tiba tidak dapat lebih dulu dari tanggal berangkat !")
+        
+        # if hasattr(self,'instance'): # if this raises error try if self.instance: instead
+        #     res_all = Booking.objects.exclude(resourceId=self.instance.resourceId).filter(resourceId=resourceId)
+        # else:
+
+        res_all = Booking.objects.exclude(idbooking=idbooks).filter(resourceId=resourceId)
+        for item in res_all:
+            if start <= item.start and item.start <= end_date or start <= item.end_date and item.end_date <= end_date:
+                raise forms.ValidationError("Bus telah dipesan di tanggal yang sama, Silahkan pilih bus lain atau tanggal lainnya !")
 
 
 class OrderForm(forms.ModelForm):

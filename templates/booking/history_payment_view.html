@@ -38,6 +38,7 @@
                 <h4 class="box-title">Riwayat Pembayaran</h4>
             </div>
             <div class="card-body">
+                <a href="{% url 'booking-print' data.idbooking %}">CETAK NOTA PESANAN</a>
                 <div class="table table-striped" >
                     <table id="paymenthistory_table">
                         <thead>
@@ -56,7 +57,8 @@
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ paid.tanggal_pembayaran }}</td>
                                     <td>{{ paid.nominal_pembayaran|intcomma  }}</td>
-                                    <td><a href="">Cetak</a></td>
+                                    <td></td>
+                                    <td><a href="{% url 'payment-print' paid.id %}">Cetak</a></td>
                                 </tr>
                                 {% endfor %}
                             {% endif %}

@@ -20,11 +20,122 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.db.models import Sum
 from django import forms
+import os
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.contrib.staticfiles import finders
+
+
+def payment_render_pdf_view(request, *args, **kwargs): 
+    pk = kwargs.get('pk')
+    datas = get_object_or_404(Order, id=pk)
+    booking = Booking.objects.get(idbooking=datas.idbooking)
+
+    template_path = 'booking/payment.html'
+    context = {
+        'datas': datas,
+        'booking': booking
+    }
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    #for download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #for displays
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def booking_render_pdf_view(request, *args, **kwargs): 
+    pk = kwargs.get('pk')
+    datas = get_object_or_404(Booking, idbooking=pk)
+    booking = Booking.objects.get(idbooking=datas.idbooking)
+
+    template_path = 'booking/booking_pdf.html'
+    context = {
+        'datas': datas,
+        'booking': booking
+    }
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    #for download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #for displays
+    response['Content-Disposition'] = 'filename="booking.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def render_pdf_view(request):
+    template_path = 'booking/payment.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    #for download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #for displays
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def vechilejsonlist(request):
+    vechile = Vechile.objects.all().values('id','no_polisi', 'alias',)
+    vechile_list = list(vechile)
+    return Jso
+
+def render_pdf_view(request):
+    template_path = 'booking/payment.html'
+    context = {'myvar': 'this is your template context'}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    #for download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #for displays
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 def vechilejsonlist(request):
     vechile = Vechile.objects.all().values('id','no_polisi', 'alias',)
     vechile_list = list(vechile)
     return JsonResponse(vechile_list, safe=False)
+
+def bookinglistjson(request):    
+    booking=BonResponse(vechile_list, safe=False)
 
 def bookinglistjson(request):    
     booking=Booking.objects.filter(status='active').values('resourceId', 'start', 'end', 'title', 'backgroundColor')
@@ -54,6 +165,7 @@ def autofill(request):
 
     pass
 
+#create customer
 @login_required(login_url='login')
 def create_customer(request):
     forms = CustomerForm()
@@ -69,7 +181,7 @@ def create_customer(request):
     }
     return render(request, 'booking/create_customer.html', context)
 
-
+#show customer
 class CustomerListView(ListView):
     model = Customer
     template_name = 'booking/customer_list.html'
@@ -145,6 +257,7 @@ def payment_history(request):
     paid_order = paid.order_set.all().order_by('tanggal_pembayaran')
 
     context = {
+        'data':paid,
         'paid':paid_order
     }
     return render(request, 'booking/history_payment_view.html', context)
@@ -171,9 +284,6 @@ def create_book(request):
             nama_pelanggan = customer_forms.cleaned_data['nama_pelanggan']
             no_hp = customer_forms.cleaned_data['no_hp']
 
-            # nmpl = request.POST['nama_pelanggan']
-            # nm_pl = {"nama_pelanggan": nmpl}
-
             customer, _ = Customer.objects.get_or_create(no_hp=customer_forms.cleaned_data['no_hp'],
             defaults={
                 'nama_pelanggan': customer_forms.cleaned_data['nama_pelanggan'],
@@ -184,23 +294,18 @@ def create_book(request):
             idbooking = booking_forms.cleaned_data['idbooking']
             resourceId = booking_forms.cleaned_data['resourceId']
             start = booking_forms.cleaned_data['start']
-            end = booking_forms.cleaned_data['end']
+            end_date = booking_forms.cleaned_data['end_date']
             harga_jual = booking_forms.cleaned_data['harga_jual']
             uang_jalan = booking_forms.cleaned_data['uang_jalan']
             parkir_bensin = booking_forms.cleaned_data['parkir_bensin']
             note = booking_forms.cleaned_data['note']
-            
-            res_all = Booking.objects.all().filter(resourceId=resourceId)
-            for item in res_all:
-                if start <= item.start and item.start <= end or start <= item.end_date and item.end_date <= end:
-                    return HttpResponse('Tanggal ini telah dipesan dengan kendaraan yang sama !')
 
             Booking.objects.create(
                 idbooking=idbooking,
                 resourceId=resourceId,
                 start=start,
-                end=end+timedelta(days=1),
-                end_date=end,
+                end_date=end_date,
+                end=end_date+timedelta(days=1),
                 harga_jual=harga_jual,
                 uang_jalan=uang_jalan,
                 parkir_bensin=parkir_bensin,
@@ -224,61 +329,38 @@ def create_book(request):
 @login_required(login_url='login')
 def edit_book(request, pk):
     booking = Booking.objects.get(idbooking=pk)
-    booking_forms = BookingForm(instance=booking)
+    booking_forms = BookingEditForm(instance=booking)
     customer_forms = CustomerForm(initial={
             'no_hp': request.GET.get('no_hp'),
             'nama_pelanggan': request.GET.get('nama_pelanggan')
         })
     if request.method == 'POST':
-        booking_forms = BookingForm(request.POST)
-        customer_forms = CustomerForm(request.POST)
-        if customer_forms.is_valid() and booking_forms.is_valid():
-            nama_pelanggan = customer_forms.cleaned_data['nama_pelanggan']
-            no_hp = customer_forms.cleaned_data['no_hp']
+        booking_forms = BookingEditForm(request.POST)
+        if booking_forms.is_valid():
 
-            # nmpl = request.POST['nama_pelanggan']
-            # nm_pl = {"nama_pelanggan": nmpl}
-
-            customer, _ = Customer.objects.get_or_create(no_hp=customer_forms.cleaned_data['no_hp'],
-            defaults={
-                'nama_pelanggan': customer_forms.cleaned_data['nama_pelanggan'],
-                'alamat_pelanggan': '',
-                'tipe': ''
-            },)
-
-            idbooking = booking_forms.cleaned_data['idbooking']
             resourceId = booking_forms.cleaned_data['resourceId']
             start = booking_forms.cleaned_data['start']
-            end = booking_forms.cleaned_data['end']
+            end_date = booking_forms.cleaned_data['end_date']
             harga_jual = booking_forms.cleaned_data['harga_jual']
             uang_jalan = booking_forms.cleaned_data['uang_jalan']
             parkir_bensin = booking_forms.cleaned_data['parkir_bensin']
             note = booking_forms.cleaned_data['note']
-            
-            res_all = Booking.objects.all().filter(resourceId=resourceId)
-            for item in res_all:
-                if start <= item.start and item.start <= end or start <= item.end_date and item.end_date <= end:
-                    return HttpResponse('Tanggal ini telah dipesan dengan kendaraan yang sama !')
 
-            Booking.objects.create(
-                idbooking=idbooking,
+            Booking.objects.filter(idbooking=booking).update(
                 resourceId=resourceId,
                 start=start,
-                end=end+timedelta(days=1),
-                end_date=end,
+                end_date=end_date,
+                end=end_date+timedelta(days=1),
                 harga_jual=harga_jual,
                 uang_jalan=uang_jalan,
                 parkir_bensin=parkir_bensin,
                 note=note,
-                title=idbooking,
-                nm_pelanggan=Customer.objects.get(no_hp=no_hp),
             ),
             return redirect('booking-list')
 
         else:
             print(booking_forms.errors)
-            print(customer_forms.errors)
-        
+
     context = {
         'cform': customer_forms,
         'form': booking_forms,

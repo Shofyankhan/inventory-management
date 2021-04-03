@@ -4,6 +4,10 @@ from django.conf.urls.static import static
 from . import views
 
 from .views import(
+    payment_render_pdf_view,
+    booking_render_pdf_view,
+    render_pdf_view,
+
     vechilejsonlist,
     autocomplete,
 
@@ -31,6 +35,10 @@ from .views import(
 
 appname = 'bookingapp'
 urlpatterns = [
+    path('payment-history/payment-print/<pk>', payment_render_pdf_view, name='payment-print'),
+    path('booking-print/<pk>', booking_render_pdf_view, name='booking-print'),
+    path('test-view', render_pdf_view, name='test-view'),
+
     path('vechilejson', vechilejsonlist, name='vechilejson'),
     path('bookingjson', bookinglistjson, name='bookingjson'),
     path('', autocomplete, name='autocomplete'),
