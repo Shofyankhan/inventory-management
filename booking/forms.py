@@ -18,6 +18,16 @@ class CustomerForm(forms.ModelForm):
             'tipe': forms.Select(attrs={'class': 'form-control', 'id': 'tipe', }),
             'no_hp': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_hp', }),
         }
+
+class CustomerEditForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+        widgets = {
+            'nama_pelanggan': forms.TextInput(attrs={'class': 'form-control', 'id': 'nama_pelanggan', 'readonly':'readonly' }),
+            'no_hp': forms.TextInput(attrs={'class': 'form-control', 'id': 'no_hp', 'readonly':'readonly' }),
+        }
     
 
 class BookingForm(forms.ModelForm):

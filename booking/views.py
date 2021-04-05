@@ -103,11 +103,6 @@ def render_pdf_view(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-def vechilejsonlist(request):
-    vechile = Vechile.objects.all().values('id','no_polisi', 'alias',)
-    vechile_list = list(vechile)
-    return Jso
-
 def render_pdf_view(request):
     template_path = 'booking/payment.html'
     context = {'myvar': 'this is your template context'}
@@ -134,8 +129,6 @@ def vechilejsonlist(request):
     vechile_list = list(vechile)
     return JsonResponse(vechile_list, safe=False)
 
-def bookinglistjson(request):    
-    booking=BonResponse(vechile_list, safe=False)
 
 def bookinglistjson(request):    
     booking=Booking.objects.filter(status='active').values('resourceId', 'start', 'end', 'title', 'backgroundColor')
@@ -212,6 +205,7 @@ def delete_customer(request, pk):
     #return render(request, 'store/arm_list.html')\
 
 
+#payment 
 @login_required(login_url='login')
 def create_payment(request):
     idbk = request.GET.get('idbooking')
@@ -222,7 +216,6 @@ def create_payment(request):
         'idbooking': idbk
     })
 
-    
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -250,6 +243,7 @@ def create_payment(request):
     }
     return render(request, 'booking/create_payment.html', context)
 
+#show payment history
 @login_required(login_url='login')
 def payment_history(request):
     idbk = request.GET.get('idbooking')
@@ -262,11 +256,13 @@ def payment_history(request):
     }
     return render(request, 'booking/history_payment_view.html', context)
 
+#show list of booking
 class BookingListView(ListView):
     model = Booking
     template_name = 'booking/book_list.html'
     context_object_name = 'book'
 
+#create booking
 @login_required(login_url='login')
 def create_book(request):
     try:
@@ -326,11 +322,12 @@ def create_book(request):
 
     return render(request, 'booking/create_book.html', context)
 
+#edit booking
 @login_required(login_url='login')
 def edit_book(request, pk):
     booking = Booking.objects.get(idbooking=pk)
     booking_forms = BookingEditForm(instance=booking)
-    customer_forms = CustomerForm(initial={
+    customer_forms = CustomerEditForm(initial={
             'no_hp': request.GET.get('no_hp'),
             'nama_pelanggan': request.GET.get('nama_pelanggan')
         })
@@ -345,6 +342,16 @@ def edit_book(request, pk):
             uang_jalan = booking_forms.cleaned_data['uang_jalan']
             parkir_bensin = booking_forms.cleaned_data['parkir_bensin']
             note = booking_forms.cleaned_data['note']
+            dn = booking.dana_masuk
+            
+            if harga_jual > dn :
+                Booking.objects.filter(idbooking=booking).update(
+                    backgroundColor='#ffc107',
+                )
+            elif harga_jual <= dn :
+                Booking.objects.filter(idbooking=booking).update(
+                    backgroundColor='#28a745',
+                )
 
             Booking.objects.filter(idbooking=booking).update(
                 resourceId=resourceId,
